@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Danh Ba</string>
+    <string name="name">Họ tên</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="add_contact">Add contact</string>
+    <string name="tllm">Thêm Liên Lạc Mới</string>
+</resources>
