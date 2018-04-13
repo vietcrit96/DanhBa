@@ -2,8 +2,8 @@ package com.example.viet.danhba;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,6 +14,7 @@ import com.example.viet.danhba.CustomContact.CustomAdapter;
 import com.example.viet.danhba.model.Contact;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private EditText edtName;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnAddContact;
     private ListView lvMain;
 
-    private ArrayList<Contact> arrayContact;
+    private List<Contact> arrayContact;
     private CustomAdapter adapter;
 
     @Override
@@ -31,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
         initWidget();
-        setOnClickListener();
         arrayContact = new ArrayList<>();
-        adapter = new CustomAdapter( (View.OnClickListener) this, R.layout.custom_listview, arrayContact );
+        setOnClickListener();
+        lvMain.setAdapter(adapter);
+
     }
 
     public void initWidget() {
@@ -50,18 +52,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isMale = true;
+                String name = edtName.getText().toString().trim();
+                String number = edtNumber.getText().toString().trim();
                 if (rbtnMale.isChecked()) {
                     isMale = true;
-                }
-                isMale = false;
-                if (edtName == null || edtNumber == null) {
+                }else isMale = false;
+                if (TextUtils.isEmpty(name)||TextUtils.isEmpty(number)) {
                     Toast.makeText( MainActivity.this, "Please input fill name or number phone", Toast.LENGTH_SHORT ).show();
                 } else {
-                    Contact contact = new Contact( isMale, edtName.getText().toString().trim(), edtNumber.getText().toString().trim() );
+                    Contact contact = new Contact( isMale,name,number);
                     arrayContact.add( contact );
                 }
                 adapter.notifyDataSetChanged();
             }
         } );
+        adapter = new CustomAdapter( this, R.layout.custom_listview, arrayContact );
     }
 }
